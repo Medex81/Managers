@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Game/Managers/Effects/Border/white_border.png" type="Texture" id=1]
+
+[node name="NinePatchRect" type="NinePatchRect"]
+anchor_right = 0.036
+anchor_bottom = 0.06
+margin_right = -8.864
+margin_bottom = -8.0
+texture = ExtResource( 1 )
+draw_center = false
+region_rect = Rect2( -0.361908, -0.0475235, 20.6731, 19.9953 )
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 14
+__meta__ = {
+"_edit_use_anchors_": false
+}

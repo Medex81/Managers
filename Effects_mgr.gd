@@ -1,6 +1,6 @@
 extends Node
 
-var reserve_effects = {}
+var reserve_effects_dict = {}
 var unique_effects = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -13,7 +13,7 @@ func _ready():
 #	pass
 
 func _get_effect_instance(effect_name:String):
-	var effect = reserve_effects[effect_name].instance()
+	var effect = reserve_effects_dict[effect_name].instance()
 	if effect:
 		effect.set_name(effect_name)
 		return effect
@@ -22,13 +22,13 @@ func _get_effect_instance(effect_name:String):
 
 # запрос сцены с эффектом
 func get_effect(effect_name:String):
-	if effect_name in reserve_effects:
+	if effect_name in reserve_effects_dict:
 		return _get_effect_instance(effect_name)
 	else:
 		# сцена не зарезервирована - пытаемся создать
 		var effect_res = load("res://Game/Managers/Effects/%s/%s.tscn" % [effect_name, effect_name] )
 		if effect_res:
-			reserve_effects[effect_name] = effect_res
+			reserve_effects_dict[effect_name] = effect_res
 			return _get_effect_instance(effect_name)
 		else:
 			# такого эффекта нет или неверно указано имя эффекта
@@ -38,13 +38,13 @@ func get_effect(effect_name:String):
 # подгружаем эффекты с диска в память
 func reserve_effects(reserve_array:Array):
 	for effect_name in reserve_array:
-		if effect_name in reserve_effects:
+		if effect_name in reserve_effects_dict:
 			continue
 		else:
 			var effect_res = load("res://Game/Managers/Effects/%s/%s.tscn" % [effect_name, effect_name] )
 			if effect_res:
 				print("Reserv effect -> %s" % effect_name)
-				reserve_effects[effect_name] = effect_res
+				reserve_effects_dict[effect_name] = effect_res
 			else:
 				# такого эффекта нет или неверно указано имя эффекта
 				print("Error effect name -> %s" % effect_name)
@@ -88,5 +88,5 @@ func remove_effect(parent_node:Object, effect_name:String):
 		print("Remove error. No parent(null) node for effect -> %s" % [effect_name])
 				
 func clear_effects():
-	reserve_effects.clear()
+	reserve_effects_dict.clear()
 	
